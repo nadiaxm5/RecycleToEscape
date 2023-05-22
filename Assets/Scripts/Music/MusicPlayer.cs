@@ -12,7 +12,7 @@ public class MusicPlayer : MonoBehaviour
     private void Start()
     {
         audio.Play();
-        musicVolume = PlayerPrefs.GetFloat("volume");
+        musicVolume = PlayerPrefs.GetFloat("volume", 1f);
         audio.volume = musicVolume;
         volumeSlider.value = musicVolume;
     }
