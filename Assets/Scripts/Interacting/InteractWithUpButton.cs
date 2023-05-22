@@ -7,19 +7,25 @@ public class InteractWithUpButton: MonoBehaviour
     public bool estaArriba;
     public AudioSource elevatorAudio;
     public GameObject coche;
+    private bool moviendoCoche;
 
     void Start()
     {
+        moviendoCoche = false;
         estaArriba = false;
     }
 
     public void ButtonInteraction()
     {
-        StartCoroutine("ElevateTheCar");
+        if (!moviendoCoche)
+        {
+            StartCoroutine("ElevateTheCar");
+        }
     }
 
     private IEnumerator ElevateTheCar()
     {
+        moviendoCoche = true;
         if (!estaArriba)
         {
             elevatorAudio.Play();
@@ -32,5 +38,6 @@ public class InteractWithUpButton: MonoBehaviour
             }
             estaArriba = true;
         }
+        moviendoCoche = false;
     }
 }

@@ -8,19 +8,25 @@ public class InteractWithDownButton : MonoBehaviour
     private InteractWithUpButton upButton;
     public AudioSource elevatorAudio;
     public GameObject coche;
+    private bool moviendoCoche;
 
     void Start()
     {
+        moviendoCoche = false;
         upButton = FindObjectOfType<InteractWithUpButton>();
     }
 
     public void ButtonInteraction()
     {
-        StartCoroutine("ElevateTheCar");
+        if (!moviendoCoche)
+        {
+            StartCoroutine("ElevateTheCar");
+        }
     }
 
     private IEnumerator ElevateTheCar()
     {
+        moviendoCoche = true;
         if (upButton.estaArriba)
         {
             elevatorAudio.Play();
@@ -33,5 +39,6 @@ public class InteractWithDownButton : MonoBehaviour
             }
             upButton.estaArriba = false;
         }
+        moviendoCoche = false;
     }
 }
