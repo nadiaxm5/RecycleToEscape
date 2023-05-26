@@ -11,9 +11,14 @@ public class Lvl2Controller : MonoBehaviour
     public GameObject[] itemObjects;
     public AudioSource audiolevelUp;
     public Animator animKey;
+    public Canvas canvas;
+    public Camera camPrincipal;
+    public Camera camLlave;
 
     private void Start()
     {
+        camPrincipal.enabled = true;
+        camLlave.enabled = false;
         Invoke("Ilumination", 0.3f); //Desactivar outline para que funcione bien
     }
 
@@ -41,7 +46,21 @@ public class Lvl2Controller : MonoBehaviour
     void DarLlave1()
     {
         audiolevelUp.Play();
-        animKey.Play("Key2");
         totalTasks = 0;
+        StartCoroutine(CambioCamara());
+    }
+
+    IEnumerator CambioCamara()
+    {
+        animKey.Play("Key2");
+        yield return new WaitForSeconds(0.1f);
+        canvas.enabled = false;
+        camPrincipal.enabled = false;
+        camLlave.enabled = true;
+        yield return new WaitForSeconds(3f);
+        canvas.enabled = true;
+        camLlave.enabled = false;
+        camPrincipal.enabled = true;
+        StopAllCoroutines();
     }
 }

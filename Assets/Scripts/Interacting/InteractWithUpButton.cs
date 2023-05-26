@@ -7,7 +7,7 @@ public class InteractWithUpButton: MonoBehaviour
     public bool estaArriba;
     public AudioSource elevatorAudio;
     public GameObject coche;
-    private bool moviendoCoche;
+    public bool moviendoCoche;
 
     void Start()
     {

@@ -59,6 +59,11 @@ public class RaycastScript : MonoBehaviour
 
     //Otros
     public GameObject cinematic;
+    public Camera camPrincipal;
+    public Camera camKeypadVerde;
+    public Camera camKeypadRojo;
+    public Camera camKeypadAzul;
+    public Canvas canvas;
 
     //Audios
     public AudioSource audioCorrect;
@@ -79,6 +84,10 @@ public class RaycastScript : MonoBehaviour
         motorOil = FindObjectOfType<InteractWithMotorOil>();
         machineDoor = FindObjectOfType<InteractWithMachineDoor>();
         currentItem = "Nada";
+        camPrincipal.enabled = true;
+        camKeypadVerde.enabled = false;
+        camKeypadRojo.enabled = false;
+        camKeypadAzul.enabled = false;
     }
 
     private void Update()
@@ -348,7 +357,7 @@ public class RaycastScript : MonoBehaviour
                 currentItem = "Nada";
                 inventory.DeleteItem(itemID);
                 audioCorrect.Play();
-                keypadTrituradora.Play("KeypadTrituradora");
+                StartCoroutine(KeypadVerde());
             }
             else audioWrong.Play();
         }
@@ -361,7 +370,7 @@ public class RaycastScript : MonoBehaviour
                 currentItem = "Nada";
                 inventory.DeleteItem(itemID);
                 audioCorrect.Play();
-                keypadPeletizadora.Play("KeypadPeletizadora");
+                StartCoroutine(KeypadRojo());
             }
             else audioWrong.Play();
         }
@@ -374,7 +383,7 @@ public class RaycastScript : MonoBehaviour
                 currentItem = "Nada";
                 inventory.DeleteItem(itemID);
                 audioCorrect.Play();
-                keypadInyectora.Play("KeypadInyectora");
+                StartCoroutine(KeypadAzul());
             }
             else audioWrong.Play();
         }
@@ -399,5 +408,44 @@ public class RaycastScript : MonoBehaviour
         cinematic.SetActive(true);
         yield return new WaitForSeconds(5.5f);
         SceneManager.LoadScene("DialogoNivel3");
+    }
+
+    IEnumerator KeypadVerde()
+    {
+        keypadTrituradora.Play("KeypadTrituradora");
+        yield return new WaitForSeconds(0.1f);
+        canvas.enabled = false;
+        camPrincipal.enabled = false;
+        camKeypadVerde.enabled = true;
+        yield return new WaitForSeconds(1.5f);
+        canvas.enabled = true;
+        camPrincipal.enabled = true;
+        camKeypadVerde.enabled = false;
+    }
+
+    IEnumerator KeypadRojo()
+    {
+        keypadPeletizadora.Play("KeypadPeletizadora");
+        yield return new WaitForSeconds(0.1f);
+        canvas.enabled = false;
+        camPrincipal.enabled = false;
+        camKeypadRojo.enabled = true;
+        yield return new WaitForSeconds(1.5f);
+        canvas.enabled = true;
+        camPrincipal.enabled = true;
+        camKeypadRojo.enabled = false;
+    }
+
+    IEnumerator KeypadAzul()
+    {
+        keypadInyectora.Play("KeypadInyectora");
+        yield return new WaitForSeconds(0.1f);
+        canvas.enabled = false;
+        camPrincipal.enabled = false;
+        camKeypadAzul.enabled = true;
+        yield return new WaitForSeconds(1.5f);
+        canvas.enabled = true;
+        camPrincipal.enabled = true;
+        camKeypadAzul.enabled = false;
     }
 }

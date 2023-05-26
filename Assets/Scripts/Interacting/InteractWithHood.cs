@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class InteractWithHood : MonoBehaviour
 {
+    [SerializeField]
+    public InteractWithUpButton upButton;
+    [SerializeField]
+    public InteractWithDownButton downButton;
+
     private bool abierto;
     private Vector3 posicionInicial;
     public AudioSource openHood;
@@ -11,6 +16,8 @@ public class InteractWithHood : MonoBehaviour
 
     void Start()
     {
+        upButton = FindObjectOfType<InteractWithUpButton>();
+        downButton = FindObjectOfType<InteractWithDownButton>();
         abierto = false;
         posicionInicial = transform.position;
         openHood = GameObject.Find("AbrirCapo").GetComponent<AudioSource>();
@@ -19,7 +26,10 @@ public class InteractWithHood : MonoBehaviour
 
     public void HoodInteracion()
     {
-        StartCoroutine("OpenTheHood");
+        if (!upButton.moviendoCoche && !downButton.moviendoCoche)
+        {
+            StartCoroutine("OpenTheHood");
+        }    
     }
 
     private IEnumerator OpenTheHood()
